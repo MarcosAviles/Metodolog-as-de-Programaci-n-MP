@@ -1,0 +1,34 @@
+BIN=./bin/
+SRC=./src/
+INC=./include/
+OBJ=./obj/
+LIB=./lib/
+OPC=-Wall -g
+ZIP=./zip/
+PRJ=practica3
+
+$(BIN)testcodificar: $(OBJ)testcodificar.o $(OBJ)codificar.o $(OBJ)imagen.o $(OBJ)byte.o $(OBJ)pgm.o $(LIB)libimagen.a 
+	g++ -o $(BIN)testcodificar $(OBJ)testimagen.o $(OBJ)pgm.o $(OBJ)imagen.o $(OBJ)byte.o $(OBJ)$(OBJ)codificar.o
+$(OBJ)testcodificar.o: $(SRC)testcodificar.cpp $(INC)imagen.h $(INC)codificar.h $(INC)byte.h
+	g++ $(OPC) -c $(SRC)testcodificar.cpp -o $(OBJ)testcodificar.o -I$(INC)
+$(OBJ)pgm.o: $(SRC)pgm.cpp $(INC)pgm.h
+	g++ $(OPC) -c $(SRC)pgm.cpp -o $(OBJ)pgm.o -I$(INC)
+$(OBJ)imagen.o: $(SRC)imagen.cpp $(INC)pgm.h $(INC)imagen.h
+	g++ $(OPC) -c $(SRC)imagen.cpp -o $(OBJ)imagen.o -I$(INC)
+$(OBJ)byte.o: $(SRC)byte.cpp $(INC)byte.h 
+	g++ $(OPC) -c $(SRC)byte.cpp -o $(OBJ)byte.o -I$(INC)
+$(OBJ)codificar.o: $(SRC)codificar.cpp $(INC)codificar.h $(OBJ)imagen.h
+	g++ $(OPC) -c $(SRC)codificar.cpp -o $(OBJ)codificar.o -I$(INC)
+$(LIB)libimagen.a: $(OBJ)pgm.o $(OBJ)imagen.o $(OBJ)
+	ar rsv $(LIB)libimagen.a $(OBJ)pgm.o $(OBJ)imagen.o
+
+
+mrproper:
+	@echo "Limpiando ficheros temporales"
+	@rm -f $(BIN)/* $(OBJ)/* $(LIB)/*.a
+zip: install mrproper
+	@echo "Empaquetando el proyecto"
+	@zip -r $(ZIP)$(PRJ).zip ./ -i *.cpp *.h *makefile *.pdf
+install:
+	@echo "Creando estructura de carpetas"
+	@mkdir -p $(BIN) $(SRC) $(OBJ) $(INC) $(LIB) $(ZIP)

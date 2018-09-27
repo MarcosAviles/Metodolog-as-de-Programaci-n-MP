@@ -1,0 +1,14 @@
+#include "imagen.h";
+/**
+@file 
+@brief Clase codificar un mensaje oculto.
+*/
+
+#ifndef _CODIFICAR_H_
+#define _CODIFICAR_H_
+
+bool ocultar(Imagen imagen, char cadena[]);
+bool relevar(Imagen imagen, char cadena[]);
+
+#endif
+
