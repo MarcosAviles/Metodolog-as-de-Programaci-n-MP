@@ -1,0 +1,19 @@
+#include "bloqueLed.h"
+#include <iostream>
+using namespace std;
+
+const mask = 0000 0001;
+
+typedef unsigned char bloqueLed;
+
+void on(bloqueLed &b, int pos){
+	
+	usinged char mask = 1 << pos;
+		
+	
+	
+
+
+}
+void off(bloqueLed &b, int pos){}
+bool get(bloqueLed b, int pos){}

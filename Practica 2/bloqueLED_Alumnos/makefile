@@ -1,0 +1,24 @@
+BIN=./bin/
+SRC=./src/
+INC=./include/
+OBJ=./obj/
+LIB=./lib/
+OPC=-Wall -g
+ZIP=./zip/
+PRJ=bloqueLed
+
+$(BIN)test: $(OBJ)test.o $(OBJ)bloqueLed.o
+	g++ -o $(BIN)programa $(OBJ)test.o $(OBJ)bloqueLed.o
+$(OBJ)test.o: $(SRC)test.cpp $(INC)bloqueLed.h
+	g++ $(OPC) -c $(SRC)test.cpp -o $(OBJ)test.o -I$(INC)
+$(OBJ)bloqueLed.o: $(SRC)bloqueLed.cpp $(INC)bloqueLed.h
+	g++ $(OPC) -c $(SRC)bloqueLed.cpp -o $(OBJ)bloqueLed.o -I$(INC)
+mrproper:
+	@echo "Limpiando ficheros temporales"
+	@rm -f $(BIN)/* $(OBJ)/* $(LIB)/*.a
+zip: install mrproper
+	@echo "Empaquetando el proyecto"
+	@zip -r $(ZIP)$(PRJ).zip ./ -i *.cpp *.h *makefile *.pdf
+install:
+	@echo "Creando estructura de carpetas"
+	@mkdir -p $(BIN) $(SRC) $(OBJ) $(INC) $(LIB) $(ZIP)
